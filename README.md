@@ -1,8 +1,8 @@
-# Chapter-8
+# Chapter-9
 
-Code and examples for Chapter 8 of [Bootstrapping Microservices](http://bit.ly/2o0aDsP).
+Code and examples for Chapte 9 of [Bootstrapping Microservices](https://www.bootstrapping-microservices.com/).
 
-In chapter 8 you learn various ways to test microservices.
+In chapter 9 you learn various ways to test microservices.
 
 Please see README in each sub-directory for instructions on starting the particular example.
 
