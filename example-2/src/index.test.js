@@ -8,7 +8,7 @@ describe("metadata microservice", () => {
     // Setup mocks.
     //
 
-    const mockListenFn = jest.fn((port, callback) => callback());
+    const mockListenFn = jest.fn();
     const mockGetFn = jest.fn();
 
     jest.doMock("express", () => { // Mock the Express module.
