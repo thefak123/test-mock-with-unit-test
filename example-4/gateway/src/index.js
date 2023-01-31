@@ -3,9 +3,12 @@ const path = require("path");
 const request = require("request");
 
 //
-// Setup event handlers.
+// Starts the microservice.
 //
-function setupHandlers(app) {
+async function startMicroservice(dbhost, dbname) {
+
+    const app = express();
+
     app.set("views", path.join(__dirname, "views")); // Set directory that contains templates for views.
     app.set("view engine", "hbs"); // Use hbs as the view engine for Express.
     
@@ -13,7 +16,7 @@ function setupHandlers(app) {
 
     //
     // Main web page that lists videos.
-    //
+    //    
     app.get("/", (req, res) => {
         request.get( // Get the list of videos from the metadata service.
             "http://metadata/videos", 
@@ -30,28 +33,18 @@ function setupHandlers(app) {
             }
         );
     });
-}
 
-//
-// Start the HTTP server.
-//
-function startHttpServer() {
-    return new Promise(resolve => { // Wrap in a promise so we can be notified when the server has started.
-        const app = express();
-        setupHandlers(app);
+    // Add other route handlers here.
 
-        const port = process.env.PORT && parseInt(process.env.PORT) || 3000;
-        app.listen(port, () => {
-            resolve(); // HTTP server is listening, resolve the promise.
-        });
-    });
+    const port = process.env.PORT && parseInt(process.env.PORT) || 3000;
+    app.listen(port);
 }
 
 //
 // Application entry point.
 //
-function main() {
-    return startHttpServer(); // Start the HTTP server.
+async function main() {
+    await startMicroservice();
 }
 
 main()
