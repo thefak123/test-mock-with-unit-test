@@ -4,11 +4,6 @@ const { describe } = test;
 const { loadFixture } = require('./lib/db-fixture');
 
 //
-// The base URL of the Flixtube web page to be tested.
-//
-const BASE_URL = "http://localhost:4000"; //todo:
-
-//
 // An example of running ab end-to-end test against our microservices application using Playwright.
 //
 describe("flixtube front end", () => {
@@ -18,8 +13,8 @@ describe("flixtube front end", () => {
         // Load the fixture named "two-videos" into the database "metadata".
         await loadFixture("metadata", "two-videos");
 
-        // Visit the Flixtube web page.
-        await page.goto(`${BASE_URL}/`);
+        // Visit the Flixtube web page (NOTE: The base URL is set in the Playwright configuration file).
+        await page.goto(`/`);
 
         // Check that we have two items in the video list.
         const videos = page.locator("#video-list>div");
