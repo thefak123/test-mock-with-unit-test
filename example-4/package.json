@@ -2,7 +2,7 @@
   "name": "example-4",
   "version": "1.0.0",
   "scripts": {
-    "test": "playwright test --reporter=list"
+    "test": "playwright test --reporter=list  --workers 1"
   },
   "devDependencies": {
     "@playwright/test": "^1.30.0",
