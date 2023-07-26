@@ -6,8 +6,6 @@ services:
     container_name: db
     ports:
       - "27017:27017"
-    expose:
-      - "27017"
     restart: always
 
   # Service for loading database fixtures.

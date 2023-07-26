@@ -1,6 +1,12 @@
 const express = require("express");
 const path = require("path");
-const request = require("request");
+const axios = require("axios");
+
+if (!process.env.PORT) {
+    throw new Error("Please specify the port number for the HTTP server with the environment variable PORT.");
+}
+
+const PORT = process.env.PORT;
 
 //
 // Starts the microservice.
@@ -16,28 +22,21 @@ async function startMicroservice(dbhost, dbname) {
 
     //
     // Main web page that lists videos.
-    //    
-    app.get("/", (req, res) => {
-        request.get( // Get the list of videos from the metadata service.
-            "http://metadata/videos", 
-            { json: true }, 
-            (err, response, body) => {
-                if (err || response.statusCode !== 200) {
-                    console.error("Failed to get video list.");
-                    console.error(err || `Status code: ${response.statusCode}`);
-                    res.sendStatus(500);
-                }
-                else {
-                    res.render("video-list", { videos: body.videos });
-                }
-            }
-        );
-    });
+    //
+    app.get("/", async (req, res) => {
 
+        // Retreives the list of videos from the metadata microservice.
+        const videosResponse = await axios.get("http://metadata/videos");
+
+        // Renders the video list for display in the browser.
+        res.render("video-list", { videos: videosResponse.data.videos });
+    });
+    
     // Add other route handlers here.
 
-    const port = process.env.PORT && parseInt(process.env.PORT) || 3000;
-    app.listen(port);
+	app.listen(PORT, () => {
+        console.log("Microservice online.");
+    });    
 }
 
 //
@@ -48,7 +47,6 @@ async function main() {
 }
 
 main()
-    .then(() => console.log("Microservice online."))
     .catch(err => {
         console.error("Microservice failed to start.");
         console.error(err && err.stack || err);
