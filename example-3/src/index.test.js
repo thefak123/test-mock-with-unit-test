@@ -7,9 +7,10 @@ const mongodb = require("mongodb");
 
 describe("metadata microservice", () => {
     
-    const BASE_URL = "http://localhost:3000"; // Base URL for our HTTP server.
     const DBHOST = "mongodb://localhost:27017"; // Have the database running on this computer.
     const DBNAME = "testdb";
+    const PORT = 3000;
+    const BASE_URL = `http://localhost:${PORT}`; // Base URL for our HTTP server.
 
     //
     // Import the module we are testing.
@@ -24,7 +25,7 @@ describe("metadata microservice", () => {
     let microservice; // Saves a reference to the our microservice object.
 
     beforeAll(async () => {
-        microservice = await startMicroservice(DBHOST, DBNAME); // Start server before all tests.
+        microservice = await startMicroservice(DBHOST, DBNAME, PORT); // Start server before all tests.
     });
 
     afterAll(async () => {
